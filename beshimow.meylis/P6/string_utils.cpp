@@ -1,24 +1,23 @@
-#include "string_utils.hpp"
-#include <iostream>
-#include <cstring>
 #include <cstdlib>
+#include <cstring>
 
-char* beshimow::removeChars(const char* input, const char* toRemove) noexcept {
-    if (!input || !toRemove) return nullptr;
+namespace beshimow {
+    char* removeChars(const char* str, const char* charsToRemove) {
+        size_t len = std::strlen(str);
+        char* result = static_cast<char*>(std::malloc(len + 1));
 
-    size_t len = std::strlen(input);
-    char* result = (char*)std::malloc(len + 1);
-    if (!result) {
-        std::cerr << "beshimow: Ошибка: не удалось выделить память.\n";
-        std::exit(1);
-    }
-
-    size_t k = 0;
-    for (size_t i = 0; i < len; ++i) {
-        if (!std::strchr(toRemove, input[i])) {
-            result[k++] = input[i];
+        if (result == nullptr) {
+            return nullptr;
         }
+
+        size_t j = 0;
+        for (size_t i = 0; i < len; ++i) {
+            if (std::strchr(charsToRemove, str[i]) == nullptr) {
+                result[j++] = str[i];
+            }
+        }
+        result[j] = '\0';
+
+        return result;
     }
-    result[k] = '\0';
-    return result;
 }
