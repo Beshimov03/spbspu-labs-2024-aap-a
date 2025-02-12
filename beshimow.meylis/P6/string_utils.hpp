@@ -1,10 +1,8 @@
 #ifndef STRING_UTILS_HPP
 #define STRING_UTILS_HPP
 
-#include <cstddef>
+#include <string>
 
-namespace beshimow {
-    char* removeChars(const char* input, const char* toRemove) noexcept;
-}
+char* removeChars(const char* str, const char* charsToRemove);
 
-#endif // STRING_UTILS_HPP
+#endif

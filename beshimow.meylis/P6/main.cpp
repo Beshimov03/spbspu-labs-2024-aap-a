@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <cstdlib>
+#include "string_utils.hpp"
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
@@ -17,6 +17,17 @@ int main(int argc, char* argv[]) {
     }
 
     std::cout << "Входное выражение: " << expression << std::endl;
+
+    const char* charsToRemove = " ";
+    char* cleanedExpression = removeChars(expression.c_str(), charsToRemove);
+
+    if (cleanedExpression) {
+        std::cout << "Очищенное выражение: " << cleanedExpression << std::endl;
+        std::free(cleanedExpression);
+    } else {
+        std::cerr << "Ошибка: Не удалось выделить память." << std::endl;
+        return 2;
+    }
 
     return 0;
 }
