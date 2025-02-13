@@ -1,7 +1,10 @@
 #ifndef STRING_UTILS_HPP
-#define STRING_UTILS_HPP
-#include <string>
+#define STRING_UTILS_HPP 
 
-char* removeChars(const char* str, const char* charsToRemove);
+namespace beshimow
+{
+    const char* has_double(const char* str);
+    bool is_double(const char* str);
+}
 
 #endif
