@@ -1,42 +1,41 @@
 #include <iostream>
+#include <iomanip>
+#include <cmath>
+#include "taylor.hpp"
 #include "output.hpp"
 
-int main()
+int main(int argc, char* argv[])
 {
-    double left = 0.0, right = 0.0;
-    size_t k = 0;
-
-    constexpr double error = 0.0029;
-    constexpr double step = 0.1;
-
-    std::cin >> left >> right >> k;
-
-    if (!std::cin)
+    if (argc < 4)
     {
-        std::cerr << "Input error\n";
+        std::cerr << "Error: Not enough arguments. Required: start and end of interval, and number of terms.\n";
         return 1;
     }
 
-    if (left <= -1.0 || right >= 1.0)
+    double start = atof(argv[1]);
+    double end = atof(argv[2]);
+    if (start >= end)
     {
-        std::cerr << "Area error\n";
+        std::cerr << "Error: Start of interval must be less than end.\n";
         return 1;
     }
 
-    if (left > right || k <= 0)
+    int terms = atoi(argv[3]);
+    if (terms <= 0)
     {
-        std::cerr << "Interval error\n";
+        std::cerr << "Error: Number of terms must be positive.\n";
         return 1;
     }
 
-    for (auto i = left; i < right; i += step)
+    beshimow::print_header();
+    double step = (end - start) / terms;
+    for (double x = start; x <= end; x += step)
     {
-        beshimow::rowOutput(i, k, error);
-        std::cout << "\n";
+        double taylor_val = beshimow::taylor_sin(x, terms, 0.0001);
+        double exact_val = std::sin(x);
+        beshimow::print_line(x, taylor_val, exact_val, false);
     }
-
-    beshimow::rowOutput(right, k, error);
-    std::cout << "\n";
+    beshimow::print_footer();
 
     return 0;
 }
